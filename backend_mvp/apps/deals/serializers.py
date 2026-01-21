@@ -8,5 +8,5 @@ class DealSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Deal
-        fields = '__all__'
-        read_only_fields = ('status', 'worker_confirmed', 'customer_confirmed', 'confirmed_at', 'customer', 'worker', 'order')
+        exclude = ('qr_token',)
+        read_only_fields = ('status', 'worker_confirmed', 'customer_confirmed', 'confirmed_at', 'customer', 'worker', 'order', 'started_at', 'finished_at', 'check_in_lat', 'check_in_lon', 'check_in_lat', 'check_out_lat')
