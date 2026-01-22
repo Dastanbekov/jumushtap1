@@ -57,11 +57,10 @@ class WorkerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='worker_profile')
     
     # KYC Data
+    # Personal & Finance Data
     birth_date = models.DateField(null=True, blank=True)
-    passport_series = models.CharField(max_length=10, blank=True, null=True) # Should be encrypted in PROD
-    passport_number = models.CharField(max_length=20, blank=True, null=True)
-    passport_scan_front = models.ImageField(upload_to='kyc/passports/', blank=True, null=True)
-    passport_scan_back = models.ImageField(upload_to='kyc/passports/', blank=True, null=True)
+    bank_card_number = models.CharField(max_length=20, blank=True, help_text="Bank card number")
+    bank_name = models.CharField(max_length=100, blank=True, help_text="Bank name")
     
     # Professional Data
     about = models.TextField(blank=True, help_text="Short bio")

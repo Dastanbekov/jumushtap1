@@ -28,19 +28,21 @@ class ProfileAPITestCase(TestCase):
         response = self.client.get('/api/v1/users/me/extended/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('skills', response.data) # Check specific field
-        self.assertIn('passport_number', response.data)
+        self.assertIn('bank_card_number', response.data)
 
     def test_update_extended_profile_worker(self):
         self.client.force_authenticate(user=self.worker_user)
         data = {
             'about': 'I am a strong worker',
-            'experience_years': 5
+            'experience_years': 5,
+            'bank_card_number': '4400111122223333'
         }
         response = self.client.patch('/api/v1/users/me/extended/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.worker_user.worker_profile.refresh_from_db()
         self.assertEqual(self.worker_user.worker_profile.about, 'I am a strong worker')
         self.assertEqual(self.worker_user.worker_profile.experience_years, 5)
+        self.assertEqual(self.worker_user.worker_profile.bank_card_number, '4400111122223333')
 
     def test_update_extended_profile_customer(self):
         self.client.force_authenticate(user=self.customer_user)
