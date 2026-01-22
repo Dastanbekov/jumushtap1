@@ -24,6 +24,9 @@ class User(AbstractUser):
     # Status can be 'active', 'blocked'
     status = models.CharField(max_length=20, default='active')
 
+    # Notifications
+    fcm_token = models.TextField(blank=True, null=True, help_text="Firebase Cloud Messaging Device Token")
+
     class Meta:
         indexes = [
             models.Index(fields=['-rating']),
@@ -61,6 +64,10 @@ class WorkerProfile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     bank_card_number = models.CharField(max_length=20, blank=True, help_text="Bank card number")
     bank_name = models.CharField(max_length=100, blank=True, help_text="Bank name")
+    
+    # Location (Updated via Check-in or App open)
+    last_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    last_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     
     # Professional Data
     about = models.TextField(blank=True, help_text="Short bio")
