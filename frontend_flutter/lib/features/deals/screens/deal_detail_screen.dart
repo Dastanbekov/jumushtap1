@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/deals_provider.dart';
 import '../../auth/providers/auth_provider.dart';
+import 'qr_display_screen.dart';
+import 'qr_scan_screen.dart';
 
 class DealDetailScreen extends ConsumerWidget {
   final Deal deal;
@@ -34,6 +36,10 @@ class DealDetailScreen extends ConsumerWidget {
                 child: Column(
                   children: [
                     Text('Status: ${d.status}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    if (d.startedAt != null)
+                      Text('Started: ${d.startedAt}'),
+                    if (d.finishedAt != null)
+                      Text('Finished: ${d.finishedAt}'),
                     const Divider(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,6 +52,43 @@ class DealDetailScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+            
+            // QR Check-in Logic
+            if (d.status == 'in_progress' || d.status == 'started') ...[
+               if (role == 'customer')
+                 ElevatedButton.icon(
+                   label: const Text('Show QR Code'),
+                   icon: const Icon(Icons.qr_code),
+                   style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+                   onPressed: () {
+                     if (d.qrToken != null) {
+                       Navigator.push(context, MaterialPageRoute(
+                         builder: (_) => QrDisplayScreen(qrData: d.qrToken!)
+                       ));
+                     } else {
+                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No QR Token available')));
+                     }
+                   },
+                 ),
+                 
+               if (role == 'worker')
+                 ElevatedButton.icon(
+                   label: Text(d.status == 'in_progress' ? 'Scan to Start' : 'Scan to Finish'),
+                   icon: const Icon(Icons.qr_code_scanner),
+                   style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+                   onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(
+                       builder: (_) => QrScanScreen(onScan: (code) {
+                          // Call logic to verify scan
+                          // ref.read(dealsProvider.notifier).checkIn(d.id, code);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Scanned: $code')));
+                       })
+                     ));
+                   },
+                 ),
+            ],
+
             const Spacer(),
             if (role == 'worker' && !d.workerConfirmed && d.status != 'finished')
               ElevatedButton.icon(
