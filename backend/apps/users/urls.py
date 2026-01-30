@@ -1,9 +1,11 @@
 # apps/users/urls.py
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import UserRegistrationView, CustomTokenObtainPairView
+from .views import UserRegistrationView, CustomTokenObtainPairView,UserMeView
 
 urlpatterns = [
+	path('me/', UserMeView.as_view(), name='users-me'),
+
     path('register/', UserRegistrationView.as_view(), name='register'),
     
     # JWT Login
