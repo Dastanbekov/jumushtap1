@@ -1,0 +1,24 @@
+import 'package:dio/dio.dart';
+import 'dart:io';
+
+class DioClient {
+  final Dio _dio;
+
+  DioClient()
+      : _dio = Dio(
+          BaseOptions(
+            // Если эмулятор Android - 10.0.2.2, если iOS или Web - 127.0.0.1
+            baseUrl: Platform.isAndroid 
+                ? 'http://10.0.2.2:8000/api/v1' 
+                : 'http://127.0.0.1:8000/api/v1',
+            connectTimeout: const Duration(seconds: 10),
+            receiveTimeout: const Duration(seconds: 10),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+
+  Dio get dio => _dio;
+}
