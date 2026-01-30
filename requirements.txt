@@ -1,0 +1,5 @@
+Django>=5.0
+djangorestframework
+djangorestframework-simplejwt
+django-phonenumber-field[phonenumbers] 
+psycopg2-binary 
