@@ -36,17 +36,27 @@ class AuthRepository {
 
   // --- РЕГИСТРАЦИЯ ---
   // data — это словарь, который содержит profile и type
+ // --- РЕГИСТРАЦИЯ (ОБНОВЛЕННАЯ) ---
   Future<void> register(Map<String, dynamic> registrationData) async {
     try {
-      await _dioClient.dio.post(
+      final response = await _dioClient.dio.post(
         '/auth/register/',
         data: registrationData,
       );
+      
+      // ВАЖНО: Теперь мы ожидаем токены и при регистрации!
+      // Превращаем ответ в модель токенов
+      final tokens = TokenModel.fromJson(response.data);
+
+      // Сразу сохраняем их, как при логине
+      await _storage.write(key: 'access_token', value: tokens.access);
+      await _storage.write(key: 'refresh_token', value: tokens.refresh);
+
     } on DioException catch (e) {
+      // Если ошибка (например, такой email уже есть)
       throw Exception(e.response?.data ?? 'Registration failed');
     }
   }
-
   // --- ПОЛУЧЕНИЕ ПРОФИЛЯ (КТО Я?) ---
   Future<Map<String, dynamic>> getProfile() async {
     try {

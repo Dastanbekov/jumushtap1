@@ -11,6 +11,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthCheckRequested>(_onCheckRequested);
     on<AuthLoginRequested>(_onLoginRequested);
     on<AuthLogoutRequested>(_onLogoutRequested);
+    on<AuthRegisterRequested>(_onRegisterRequested);
+  }
+  // В конструкторе добавь:
+
+  // ...
+
+  Future<void> _onRegisterRequested(
+    AuthRegisterRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.loading());
+    try {
+      // Репозиторий сам отправит данные И сохранит токены
+      await _authRepository.register(event.data);
+      
+      // Сразу говорим приложению: "Мы залогинены!"
+      emit(const AuthState.authenticated()); 
+    } catch (e) {
+      emit(AuthState.error(e.toString()));
+    }
   }
 
   // 1. Проверка при старте приложения

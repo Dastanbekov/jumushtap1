@@ -61,10 +61,12 @@ class RoleSelectionScreen extends StatelessWidget {
                   _RoleCard(
                     title: "Заказчик",
                     subtitle: "Размещать смены и\nнаходить исполнителей",
-                    color: const Color(0xFFE64A19), // Красный оттенок
+                    color: const Color(0xFFE64A19), 
                     icon: Icons.person,
                     onTap: () {
-                      // Логика выбора роли
+                      // --- ВОТ ЗДЕСЬ ИЗМЕНЕНИЕ ---
+                      // Переходим на экран регистрации ЗАКАЗЧИКА
+                      context.push('/register/customer');
                     },
                   ),
 
@@ -75,9 +77,11 @@ class RoleSelectionScreen extends StatelessWidget {
                     title: "Исполнитель",
                     subtitle: "Находить работу и выходить\nна смены",
                     color: AppColors.primaryTeal,
-                    icon: Icons.work, // или другая иконка
+                    icon: Icons.work, 
                     onTap: () {
-                       // Логика выбора роли
+                       // --- И ЗДЕСЬ ИЗМЕНЕНИЕ ---
+                       // Переходим на экран регистрации ИСПОЛНИТЕЛЯ
+                       context.push('/register/performer');
                     },
                   ),
                 ],
@@ -90,6 +94,7 @@ class RoleSelectionScreen extends StatelessWidget {
   }
 }
 
+// _RoleCard оставляем таким же, он у тебя правильный
 class _RoleCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -98,6 +103,7 @@ class _RoleCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const _RoleCard({
+    super.key, // Добавил super.key для порядка
     required this.title,
     required this.subtitle,
     required this.color,
@@ -114,7 +120,7 @@ class _RoleCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: color, width: 1), // Цветная обводка
+          border: Border.all(color: color, width: 1),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.1),
@@ -126,7 +132,6 @@ class _RoleCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Цветной блок с иконкой
             Container(
               width: 80,
               decoration: BoxDecoration(
@@ -140,8 +145,6 @@ class _RoleCard extends StatelessWidget {
                 child: Icon(icon, color: Colors.white, size: 40),
               ),
             ),
-            
-            // Текст
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),

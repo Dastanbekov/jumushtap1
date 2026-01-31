@@ -20,6 +20,11 @@ class AuthLoginRequested extends AuthEvent {
   @override
   List<Object> get props => [email, password];
 }
-
+class AuthRegisterRequested extends AuthEvent {
+  final Map<String, dynamic> data; // Полный JSON с профилем
+  const AuthRegisterRequested(this.data);
+  @override
+  List<Object> get props => [data];
+}
 // Событие: Пользователь нажал кнопку Выйти
 class AuthLogoutRequested extends AuthEvent {}

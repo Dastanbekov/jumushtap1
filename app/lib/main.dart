@@ -8,6 +8,10 @@ import 'features/auth/logic/auth_bloc.dart';
 import 'features/auth/logic/auth_event.dart';
 import 'features/auth/ui/welcome_screen.dart'; // Импорт экрана приветствия
 import 'features/auth/ui/role_selection_screen.dart'; // Импорт выбора роли
+import 'features/auth/ui/register_customer_screen.dart';
+import 'features/auth/ui/register_performer_screen.dart';
+import 'features/home/home_screen.dart';
+import 'features/auth/ui/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +32,13 @@ final _router = GoRouter(
     GoRoute(
       path: '/role-selection',
       builder: (context, state) => const RoleSelectionScreen(),
+    ),
+    GoRoute(path: '/register/customer', builder: (context, state) => const RegisterCustomerScreen()),
+    GoRoute(path: '/register/performer', builder: (context, state) => const RegisterPerformerScreen()),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginScreen(),
     ),
   ],
 );

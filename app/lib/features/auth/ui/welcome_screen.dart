@@ -71,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                              // Пока просто принт, позже навигация на логин
-                             print("Login pressed");
+                             context.push('/login');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryTeal,
@@ -111,22 +111,35 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
                 
+                // ... верхняя часть кода без изменений (SizedBox, Text, Buttons) ...
+
                 const SizedBox(height: 10),
                 const Text(
                   "Бесплатно • Без подписки • По всему Кыргызстану",
                   style: TextStyle(fontSize: 12, color: AppColors.greySubtext),
                 ),
 
-                const Spacer(),
-
-                // Картинка парня внизу
-                // Важно: если картинки пока нет, закомментируй строку ниже
-                Image.asset(
-                   'assets/images/worker_man.png',
-                   width: double.infinity,
-                   fit: BoxFit.cover,
-                   // height: 250, // подбери высоту
+                // --- ИЗМЕНЕНИЯ НАЧИНАЮТСЯ ЗДЕСЬ ---
+                
+                // Вместо Spacer() используем Expanded.
+                // Он говорит: "Займи всё доступное место до низа экрана, но не больше"
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter, // Прижимаем картинку к самому низу
+                    child: Image.asset(
+                       'assets/images/worker_man.png',
+                       // width: double.infinity, // Можно убрать, если fit: contain
+                       
+                       // ВАЖНО: fit.
+                       // BoxFit.contain - покажет картинку целиком, чтобы она влезла.
+                       // BoxFit.cover - обрежет лишнее, но заполнит ширину (может обрезать голову).
+                       // BoxFit.fitWidth - растянет по ширине (может уйти вниз за экран, если высокая).
+                       fit: BoxFit.contain, 
+                    ),
+                  ),
                 ),
+                
+                // --- КОНЕЦ ИЗМЕНЕНИЙ ---
               ],
             ),
           ),
