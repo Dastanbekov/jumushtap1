@@ -10,7 +10,8 @@ import 'features/auth/ui/welcome_screen.dart'; // Импорт экрана пр
 import 'features/auth/ui/role_selection_screen.dart'; // Импорт выбора роли
 import 'features/auth/ui/register_customer_screen.dart';
 import 'features/auth/ui/register_performer_screen.dart';
-import 'features/home/home_screen.dart';
+import 'features/worker/home/ui/worker_home_screen.dart';
+import 'features/customer/home/ui/customer_home_screen.dart';
 import 'features/auth/ui/login_screen.dart';
 
 void main() async {
@@ -35,7 +36,10 @@ final _router = GoRouter(
     ),
     GoRoute(path: '/register/customer', builder: (context, state) => const RegisterCustomerScreen()),
     GoRoute(path: '/register/performer', builder: (context, state) => const RegisterPerformerScreen()),
-    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
+    // Главный экран для работника (worker)
+    GoRoute(path: '/home', builder: (context, state) => const WorkerHomeScreen()),
+    // Главный экран для заказчика (business/individual)
+    GoRoute(path: '/customer-home', builder: (context, state) => const CustomerHomeScreen()),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),

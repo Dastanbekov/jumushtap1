@@ -27,9 +27,13 @@ class AuthRepository {
       // Сохраняем токены в защищенное хранилище
       await _storage.write(key: 'access_token', value: tokens.access);
       await _storage.write(key: 'refresh_token', value: tokens.refresh);
+
+      // Получаем профиль и сохраняем user_type для маршрутизации
+      final profile = await getProfile();
+      final userType = profile['user_type'] ?? 'worker';
+      await _storage.write(key: 'user_type', value: userType);
       
     } on DioException catch (e) {
-      // Здесь можно обработать ошибку (например, неверный пароль)
       throw Exception(e.response?.data['detail'] ?? 'Login failed');
     }
   }
@@ -44,16 +48,18 @@ class AuthRepository {
         data: registrationData,
       );
       
-      // ВАЖНО: Теперь мы ожидаем токены и при регистрации!
       // Превращаем ответ в модель токенов
       final tokens = TokenModel.fromJson(response.data);
 
-      // Сразу сохраняем их, как при логине
+      // Сохраняем токены
       await _storage.write(key: 'access_token', value: tokens.access);
       await _storage.write(key: 'refresh_token', value: tokens.refresh);
 
+      // Сохраняем user_type из данных регистрации для маршрутизации
+      final userType = registrationData['user_type'] ?? 'worker';
+      await _storage.write(key: 'user_type', value: userType);
+
     } on DioException catch (e) {
-      // Если ошибка (например, такой email уже есть)
       throw Exception(e.response?.data ?? 'Registration failed');
     }
   }
@@ -85,5 +91,10 @@ class AuthRepository {
   Future<bool> isLoggedIn() async {
     final token = await _storage.read(key: 'access_token');
     return token != null;
+  }
+
+  // Получить тип пользователя для маршрутизации
+  Future<String?> getUserType() async {
+    return await _storage.read(key: 'user_type');
   }
 }
