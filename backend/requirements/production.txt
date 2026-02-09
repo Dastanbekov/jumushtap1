@@ -1,0 +1,16 @@
+# ==================================================
+# JumushTap Backend — Production Requirements
+# ==================================================
+
+-r base.txt
+
+# Production Server
+gunicorn>=21.2  # WSGI server
+gevent>=24.2  # Async worker for gunicorn
+
+# Monitoring & Performance
+sentry-sdk>=1.40  # Error tracking
+django-prometheus>=2.3  # Metrics
+
+# Production utilities
+whitenoise>=6.6  # Static file serving

@@ -1,0 +1,33 @@
+# ==================================================
+# JumushTap Backend — Development Requirements
+# ==================================================
+
+-r base.txt
+
+# Development Tools
+django-extensions>=3.2  # shell_plus, runserver_plus
+django-debug-toolbar>=4.2  # Debug toolbar
+ipython>=8.20  # Better shell
+ipdb>=0.13  # Debugger
+
+# Testing
+pytest>=7.4
+pytest-django>=4.5
+pytest-cov>=4.1
+pytest-xdist>=3.5  # Parallel test execution
+factory-boy>=3.3  # Test fixtures
+faker>=22.0  # Fake data generation
+freezegun>=1.4  # Time mocking
+
+# Code Quality
+black>=24.1  # Code formatter
+flake8>=7.0  # Linter
+isort>=5.13  # Import sorter
+mypy>=1.8  # Type checking
+
+# Security Scanning
+bandit>=1.7  # SAST for Python
+safety>=3.0  # Dependency vulnerability scanner
+
+# Load Testing
+locust>=2.20  # Load testing tool

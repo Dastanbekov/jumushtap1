@@ -1,5 +1,10 @@
-Django>=5.0
-djangorestframework
-djangorestframework-simplejwt
-django-phonenumber-field[phonenumbers] 
-psycopg2-binary 
+# JumushTap Backend Requirements
+# 
+# For development:
+#   pip install -r requirements/development.txt
+#
+# For production:
+#   pip install -r requirements/production.txt
+#
+# Direct install (development):
+-r requirements/development.txt

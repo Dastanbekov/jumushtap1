@@ -1,0 +1,33 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+<div style="padding: 20px; background-color: #f8f9fa; margin-bottom: 20px; border-radius: 5px;">
+    <h2 style="margin-top: 0;">🚀 Key Performance Indicators</h2>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
+            <h3 style="margin: 0 0 10px 0; color: #666;">Total Users</h3>
+            <div style="font-size: 24px; font-weight: bold;">{{ metrics.total_users }}</div>
+            <div style="font-size: 12px; color: #888;">
+                👷 {{ metrics.workers }} Workers <br>
+                🏢 {{ metrics.businesses }} Businesses
+            </div>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
+            <h3 style="margin: 0 0 10px 0; color: #666;">Jobs</h3>
+            <div style="font-size: 24px; font-weight: bold;">{{ metrics.active_jobs }}</div>
+            <div style="font-size: 12px; color: #888;">Active Now (Total: {{ metrics.total_jobs }})</div>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
+            <h3 style="margin: 0 0 10px 0; color: #666;">Escrow Volume</h3>
+            <div style="font-size: 24px; font-weight: bold; color: #28a745;">{{ metrics.escrow_volume }} KGS</div>
+            <div style="font-size: 12px; color: #888;">Currently Held Funds</div>
+        </div>
+
+    </div>
+</div>
+
+{{ block.super }}
+{% endblock %}

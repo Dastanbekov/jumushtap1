@@ -15,9 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+# Admin header configuration
+admin.site.site_header = "JumushTap Administration"
+admin.site.site_title = "JumushTap Admin"
+admin.site.index_title = "Welcome to JumushTap Management"
 
 urlpatterns = [
+    # API Schema & Documentation
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
     path('admin/', admin.site.urls),
-	path('api/v1/auth/', include('apps.users.urls')),
+    path('api/v1/auth/', include('apps.users.urls')),
+    path('api/v1/', include('apps.jobs.urls')),
+    path('api/v1/payments/', include('apps.payments.urls')),
+    path('api/v1/', include('apps.notifications.urls')),
+    path('api/v1/', include('apps.ratings.urls')),
 ]
